@@ -1,0 +1,17 @@
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/.turbo/
+frontend/.vercel/
+frontend/.env.local
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+
+# Misc
+*.log
