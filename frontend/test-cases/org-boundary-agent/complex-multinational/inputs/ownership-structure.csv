@@ -1,0 +1,15 @@
+Parent Entity,Subsidiary Entity,Direct Ownership %,Indirect Ownership %,Control Type,Voting Rights %,Control Mechanism
+GlobalEnergia Holdings S.A.,EnergiaTech USA Inc.,100%,100%,Operational,100%,Direct subsidiary
+GlobalEnergia Holdings S.A.,EuropeanEnergia B.V.,85%,85%,Operational,85%,Majority stake
+GlobalEnergia Holdings S.A.,Asia Pacific Energy Pte Ltd,90%,90%,Operational,90%,Direct subsidiary
+GlobalEnergia Holdings S.A.,LATAM Energia Ltda,70%,70%,Operational,70%,Majority stake
+EnergiaTech USA Inc.,EnergiaTech Manufacturing LLC,100%,100%,Operational,100%,Wholly owned subsidiary
+EnergiaTech USA Inc.,EnergiaTech Services Corp,100%,100%,Operational,100%,Wholly owned subsidiary
+EuropeanEnergia B.V.,EnergiaTech Deutschland GmbH,100%,85%,Operational,100%,Wholly owned subsidiary
+EuropeanEnergia B.V.,EnergiaTech France SAS,75%,63.75%,Operational,75%,Majority stake
+EuropeanEnergia B.V.,Nordic Energy AB,60%,51%,Financial,60%,Majority stake - limited operational control
+Asia Pacific Energy Pte Ltd,EnergiaTech Japan K.K.,100%,90%,Operational,100%,Wholly owned subsidiary
+Asia Pacific Energy Pte Ltd,EnergiaTech Australia Pty Ltd,100%,90%,Operational,100%,Wholly owned subsidiary
+Asia Pacific Energy Pte Ltd,India Solar Energy Pvt Ltd,51%,45.9%,Financial,51%,Joint venture structure
+LATAM Energia Ltda,EnergiaTech Mexico S.A.,100%,70%,Operational,100%,Wholly owned subsidiary
+LATAM Energia Ltda,Argentina Wind Power S.A.,80%,56%,Operational,80%,Majority stake

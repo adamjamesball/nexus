@@ -1,0 +1,9 @@
+Site Name,Entity Name,Address,Country,State/Province,Employee Count,Site Type,Parent Company,Ownership %
+Corporate Headquarters,GreenTech Industries Inc.,"1500 Innovation Drive, Austin",United States,Texas,120,Headquarters,,100%
+Manufacturing Plant A,GreenTech Manufacturing LLC,"2750 Industrial Blvd, Dallas",United States,Texas,280,Manufacturing,GreenTech Industries Inc.,100%
+Manufacturing Plant B,GreenTech Manufacturing LLC,"8900 Factory Row, Houston",United States,Texas,95,Manufacturing,GreenTech Industries Inc.,100%
+Solar Panel Assembly,GreenTech Solar Division,"2751 Industrial Blvd, Dallas",United States,Texas,85,Manufacturing,GreenTech Manufacturing LLC,100%
+R&D Laboratory,GreenTech Industries Inc.,"1502 Innovation Drive, Austin",United States,Texas,45,Research,GreenTech Industries Inc.,100%
+Warehouse & Distribution,GreenTech Manufacturing LLC,"5500 Distribution Way, Fort Worth",United States,Texas,35,Warehouse,GreenTech Industries Inc.,100%
+Sales Office - West,GreenTech Industries Inc.,"900 Tech Square, San Francisco",United States,California,25,Office,GreenTech Industries Inc.,100%
+Sales Office - East,GreenTech Industries Inc.,"200 Innovation Plaza, Boston",United States,Massachusetts,18,Office,GreenTech Industries Inc.,100%

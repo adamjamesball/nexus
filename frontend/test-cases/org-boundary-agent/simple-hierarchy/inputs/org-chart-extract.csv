@@ -1,0 +1,4 @@
+Entity Name,Entity Type,Legal Jurisdiction,Parent Entity,Ownership Percentage,Incorporation Date,Primary Business Activity,Annual Revenue (USD),Employee Count
+GreenTech Industries Inc.,Corporation,Delaware,N/A,N/A,2018-03-15,"Renewable energy technology development",45000000,120
+GreenTech Manufacturing LLC,Limited Liability Company,Texas,GreenTech Industries Inc.,100%,2019-01-20,"Solar panel and battery manufacturing",35000000,410
+GreenTech Solar Division,Business Unit,Texas,GreenTech Manufacturing LLC,100%,2020-06-10,"Solar panel assembly and quality control",12000000,85

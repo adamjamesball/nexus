@@ -1,0 +1,8 @@
+Entity Name,Partnership Type,Ownership %,Voting Rights %,Control Type,Partner Names,Formation Date,Jurisdiction
+CleanEnergy Partners Corp,Parent Company,100%,100%,Full Control,N/A,2017-05-12,Delaware
+Solar Manufacturing LLC,Wholly-Owned Subsidiary,100%,100%,Operational Control,N/A,2018-02-20,Texas
+Wind Development JV,Joint Venture,50%,50%,Shared Control,WindPower Industries Inc.,2019-06-15,Delaware
+Grid Storage Solutions LP,Limited Partnership,60%,55%,Operational Control,"EnergyTech Partners (25%), GridCorp (15%)",2020-01-08,Delaware
+Offshore Wind Ventures,Strategic Investment,40%,35%,Significant Influence,"OceanPower Ltd (35%), MarineEnergy Corp (25%)",2020-09-22,Delaware
+Battery Technology JV,Joint Venture,50%,50%,Shared Control,TechCorp Advanced Materials,2021-03-18,California
+Green Hydrogen Partnership,Minority Investment,30%,25%,Equity Method,"HydrogenTech Inc. (45%), IndustrialGas Corp (25%)",2021-11-30,Texas

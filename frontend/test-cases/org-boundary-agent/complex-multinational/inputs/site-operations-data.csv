@@ -1,0 +1,29 @@
+Site Name,Entity Name,Country,Region,Site Type,Employees,Annual Revenue (USD),Operations Status
+Luxembourg HQ,GlobalEnergia Holdings S.A.,Luxembourg,Europe,Headquarters,45,N/A,Active
+Boston Regional Office,EnergiaTech USA Inc.,United States,North America,Office,85,N/A,Active
+Denver Manufacturing Plant,EnergiaTech Manufacturing LLC,United States,North America,Manufacturing,420,125000000,Active
+Phoenix Solar Assembly,EnergiaTech Manufacturing LLC,United States,North America,Manufacturing,280,85000000,Active
+Miami Services Hub,EnergiaTech Services Corp,United States,North America,Service Center,150,45000000,Active
+Seattle Installation Base,EnergiaTech Services Corp,United States,North America,Service Center,95,28000000,Active
+Amsterdam Regional HQ,EuropeanEnergia B.V.,Netherlands,Europe,Headquarters,65,N/A,Active
+Berlin Operations Center,EnergiaTech Deutschland GmbH,Germany,Europe,Office,120,72000000,Active
+Hamburg Wind Farm,EnergiaTech Deutschland GmbH,Germany,Europe,Generation,25,15000000,Active
+Paris Development Office,EnergiaTech France SAS,France,Europe,Office,95,N/A,Active
+Normandy Offshore Base,EnergiaTech France SAS,France,Europe,Generation,65,38000000,Active
+Stockholm Research Center,Nordic Energy AB,Sweden,Europe,Research,180,N/A,Active
+Gothenburg Battery Plant,Nordic Energy AB,Sweden,Europe,Manufacturing,220,95000000,Active
+Singapore Regional HQ,Asia Pacific Energy Pte Ltd,Singapore,Asia Pacific,Headquarters,55,N/A,Active
+Tokyo Development Office,EnergiaTech Japan K.K.,Japan,Asia Pacific,Office,85,N/A,Active
+Osaka Solar Manufacturing,EnergiaTech Japan K.K.,Japan,Asia Pacific,Manufacturing,350,145000000,Active
+Sydney Operations Center,EnergiaTech Australia Pty Ltd,Australia,Asia Pacific,Office,75,N/A,Active
+Queensland Wind Farm,EnergiaTech Australia Pty Ltd,Australia,Asia Pacific,Generation,45,22000000,Active
+Perth Solar Installation,EnergiaTech Australia Pty Ltd,Australia,Asia Pacific,Generation,35,18000000,Active
+Mumbai Development Office,India Solar Energy Pvt Ltd,India,Asia Pacific,Office,285,N/A,Active
+Rajasthan Solar Park,India Solar Energy Pvt Ltd,India,Asia Pacific,Generation,450,185000000,Active
+Gujarat Manufacturing,India Solar Energy Pvt Ltd,India,Asia Pacific,Manufacturing,380,98000000,Active
+São Paulo Regional HQ,LATAM Energia Ltda,Brazil,Latin America,Headquarters,75,N/A,Active
+Rio Wind Development,LATAM Energia Ltda,Brazil,Latin America,Office,55,N/A,Active
+Mexico City Office,EnergiaTech Mexico S.A.,Mexico,Latin America,Office,125,N/A,Active
+Yucatan Solar Project,EnergiaTech Mexico S.A.,Mexico,Latin America,Generation,85,35000000,Active
+Buenos Aires Office,Argentina Wind Power S.A.,Argentina,Latin America,Office,65,N/A,Active
+Patagonia Wind Farm,Argentina Wind Power S.A.,Argentina,Latin America,Generation,95,48000000,Active

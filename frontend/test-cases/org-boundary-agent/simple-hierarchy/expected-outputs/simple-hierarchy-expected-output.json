@@ -1,0 +1,154 @@
+{
+  "testId": "ORG-001",
+  "testName": "Simple Hierarchy",
+  "entities": [
+    {
+      "id": "entity-001",
+      "name": "GreenTech Industries Inc.",
+      "type": "Parent Company",
+      "jurisdiction": "Delaware, USA",
+      "ownershipPercentage": null,
+      "parentId": null,
+      "confidenceScore": 98.5,
+      "isUserVerified": false,
+      "identificationSources": ["site_list", "org_chart"],
+      "metadata": {
+        "legalType": "Corporation",
+        "incorporationDate": "2018-03-15",
+        "sector": "Renewable Energy Technology",
+        "employees": 120,
+        "revenue": 45000000,
+        "sites": 4,
+        "primaryActivity": "Renewable energy technology development"
+      }
+    },
+    {
+      "id": "entity-002", 
+      "name": "GreenTech Manufacturing LLC",
+      "type": "Subsidiary",
+      "jurisdiction": "Texas, USA",
+      "ownershipPercentage": 100,
+      "parentId": "entity-001",
+      "confidenceScore": 96.2,
+      "isUserVerified": false,
+      "identificationSources": ["site_list", "org_chart"],
+      "metadata": {
+        "legalType": "Limited Liability Company",
+        "incorporationDate": "2019-01-20",
+        "sector": "Manufacturing",
+        "employees": 410,
+        "revenue": 35000000,
+        "sites": 3,
+        "primaryActivity": "Solar panel and battery manufacturing"
+      }
+    },
+    {
+      "id": "entity-003",
+      "name": "GreenTech Solar Division", 
+      "type": "Business Unit",
+      "jurisdiction": "Texas, USA",
+      "ownershipPercentage": 100,
+      "parentId": "entity-002",
+      "confidenceScore": 92.8,
+      "isUserVerified": false,
+      "identificationSources": ["site_list", "org_chart"],
+      "metadata": {
+        "legalType": "Business Unit",
+        "incorporationDate": "2020-06-10",
+        "sector": "Manufacturing",
+        "employees": 85,
+        "revenue": 12000000,
+        "sites": 1,
+        "primaryActivity": "Solar panel assembly and quality control"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel-001",
+      "parentId": "entity-001",
+      "childId": "entity-002", 
+      "ownershipPercentage": 100,
+      "controlType": "operational",
+      "confidenceScore": 95.8,
+      "relationshipType": "direct_subsidiary",
+      "evidenceSources": ["org_chart", "site_list"]
+    },
+    {
+      "id": "rel-002",
+      "parentId": "entity-002",
+      "childId": "entity-003",
+      "ownershipPercentage": 100,
+      "controlType": "operational", 
+      "confidenceScore": 91.4,
+      "relationshipType": "business_unit",
+      "evidenceSources": ["org_chart", "site_list"]
+    }
+  ],
+  "insights": [
+    {
+      "id": "insight-001",
+      "type": "boundary_recommendation",
+      "title": "Scope 1 & 2 Boundary Recommendation",
+      "description": "Include all entities for Scope 1 & 2 emissions reporting under operational control approach. 100% ownership provides clear operational control.",
+      "affectedEntities": ["entity-001", "entity-002", "entity-003"],
+      "confidence": 96.7,
+      "category": "reporting_boundary"
+    },
+    {
+      "id": "insight-002", 
+      "type": "control_assessment",
+      "title": "Clear Operational Control Structure",
+      "description": "Simple 3-tier hierarchy with 100% ownership throughout provides unambiguous operational control for sustainability reporting.",
+      "affectedEntities": ["entity-001", "entity-002", "entity-003"],
+      "confidence": 94.3,
+      "category": "control_assessment"
+    },
+    {
+      "id": "insight-003",
+      "type": "data_quality",
+      "title": "High Data Quality Assessment", 
+      "description": "Consistent entity information across multiple sources with no conflicts or missing critical data.",
+      "affectedEntities": ["entity-001", "entity-002", "entity-003"],
+      "confidence": 97.1,
+      "category": "data_quality"
+    }
+  ],
+  "dataQualityIssues": [],
+  "boundaryRecommendations": {
+    "scope12": {
+      "approach": "operational_control",
+      "includedEntities": ["entity-001", "entity-002", "entity-003"],
+      "justification": "100% ownership provides clear operational control for all entities",
+      "confidence": 96.7
+    },
+    "scope3": {
+      "approach": "operational_control",
+      "includedEntities": ["entity-001", "entity-002", "entity-003"],
+      "justification": "All entities should be included in Scope 3 boundary assessment",
+      "confidence": 94.2
+    }
+  },
+  "processingMetrics": {
+    "entitiesProcessed": 3,
+    "relationshipsIdentified": 2,
+    "confidenceAverage": 94.5,
+    "processingTimeMs": 2100,
+    "sourceFilesProcessed": 2,
+    "dataPointsExtracted": 24,
+    "validationChecks": 8,
+    "validationsPassed": 8
+  },
+  "validationResults": {
+    "entityCountMatch": true,
+    "relationshipCountMatch": true, 
+    "ownershipAccuracy": 100,
+    "nameMatchingAccuracy": 100,
+    "hierarchyDepthCorrect": true,
+    "confidenceThresholdMet": true,
+    "noDataQualityIssues": true,
+    "processingTimeAcceptable": true,
+    "overallSuccess": true,
+    "successScore": 100
+  }
+}

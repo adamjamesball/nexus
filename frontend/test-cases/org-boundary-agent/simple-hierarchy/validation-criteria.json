@@ -1,0 +1,185 @@
+{
+  "testId": "ORG-001",
+  "testName": "Simple Hierarchy Validation Criteria",
+  "version": "1.0",
+  "primaryCriteria": {
+    "entityCount": {
+      "expected": 3,
+      "tolerance": 0,
+      "weight": 25,
+      "description": "Must identify exactly 3 entities"
+    },
+    "relationshipCount": {
+      "expected": 2,
+      "tolerance": 0, 
+      "weight": 25,
+      "description": "Must identify exactly 2 parent-child relationships"
+    },
+    "ownershipAccuracy": {
+      "expected": 100,
+      "tolerance": 0,
+      "weight": 20,
+      "description": "100% ownership must be correctly identified for both relationships"
+    },
+    "confidenceThreshold": {
+      "minimum": 90,
+      "weight": 15,
+      "description": "Average confidence score must be ≥90%"
+    },
+    "processingTime": {
+      "maximum": 300000,
+      "weight": 15,
+      "description": "Processing must complete within 5 minutes (300,000ms)"
+    }
+  },
+  "secondaryCriteria": {
+    "nameMatching": {
+      "expectedNames": [
+        "GreenTech Industries Inc.",
+        "GreenTech Manufacturing LLC", 
+        "GreenTech Solar Division"
+      ],
+      "weight": 10,
+      "description": "Entity names must exactly match expected values"
+    },
+    "jurisdictionAccuracy": {
+      "expectedJurisdictions": [
+        "Delaware, USA",
+        "Texas, USA",
+        "Texas, USA"
+      ],
+      "weight": 10,
+      "description": "Legal jurisdictions must be correctly identified"
+    },
+    "entityTypes": {
+      "expectedTypes": [
+        "Parent Company",
+        "Subsidiary", 
+        "Business Unit"
+      ],
+      "weight": 10,
+      "description": "Entity types must be appropriately classified"
+    }
+  },
+  "dataQualityCriteria": {
+    "noMissingData": {
+      "weight": 5,
+      "description": "No critical data fields should be missing"
+    },
+    "noConflicts": {
+      "weight": 5,
+      "description": "No conflicting ownership information"
+    },
+    "noDuplicates": {
+      "weight": 5,
+      "description": "Each entity should be identified only once"
+    }
+  },
+  "advancedCriteria": {
+    "boundaryRecommendations": {
+      "weight": 5,
+      "description": "Should provide appropriate GHG Protocol boundary recommendations"
+    },
+    "controlAssessment": {
+      "weight": 5,
+      "description": "Should correctly assess operational vs. financial control"
+    },
+    "confidenceCalibration": {
+      "weight": 3,
+      "description": "Confidence scores should align with actual accuracy"
+    }
+  },
+  "passingThresholds": {
+    "overall": 85,
+    "primary": 90,
+    "secondary": 75,
+    "dataQuality": 95
+  },
+  "testValidation": {
+    "automatedChecks": [
+      {
+        "name": "entity_count_validation",
+        "type": "exact_match",
+        "field": "entities.length",
+        "expected": 3
+      },
+      {
+        "name": "relationship_count_validation", 
+        "type": "exact_match",
+        "field": "relationships.length",
+        "expected": 2
+      },
+      {
+        "name": "ownership_validation",
+        "type": "all_match",
+        "field": "relationships[*].ownershipPercentage",
+        "expected": 100
+      },
+      {
+        "name": "confidence_validation",
+        "type": "minimum_average",
+        "field": "entities[*].confidenceScore",
+        "minimum": 90
+      },
+      {
+        "name": "parent_child_validation",
+        "type": "relationship_hierarchy",
+        "expectedHierarchy": {
+          "GreenTech Industries Inc.": "GreenTech Manufacturing LLC",
+          "GreenTech Manufacturing LLC": "GreenTech Solar Division"
+        }
+      }
+    ],
+    "manualChecks": [
+      {
+        "name": "business_logic_validation",
+        "description": "Verify that business logic makes sense for renewable energy company",
+        "checkpoints": [
+          "Parent company focuses on technology development",
+          "Manufacturing subsidiary handles production",
+          "Solar division specializes in solar panel assembly"
+        ]
+      },
+      {
+        "name": "metadata_validation",
+        "description": "Verify extracted metadata is accurate and complete",
+        "checkpoints": [
+          "Employee counts match input data",
+          "Revenue figures are extracted correctly",
+          "Site counts are aggregated properly",
+          "Incorporation dates are preserved"
+        ]
+      }
+    ]
+  },
+  "errorScenarios": {
+    "acceptableIssues": [
+      "Minor variations in entity name formatting",
+      "Slight differences in confidence scores (±2%)"
+    ],
+    "criticalFailures": [
+      "Missing entities",
+      "Incorrect ownership relationships", 
+      "Wrong parent-child mappings",
+      "Confidence scores below 85%",
+      "Processing failures or timeouts"
+    ]
+  },
+  "reportingFormat": {
+    "successMetrics": [
+      "Overall Success Score (%)",
+      "Primary Criteria Score (%)", 
+      "Secondary Criteria Score (%)",
+      "Data Quality Score (%)",
+      "Processing Time (ms)",
+      "Average Confidence Score (%)"
+    ],
+    "failureDetails": [
+      "Failed Validation Checks",
+      "Missing or Incorrect Entities",
+      "Relationship Mapping Errors", 
+      "Data Quality Issues",
+      "Performance Issues"
+    ]
+  }
+}

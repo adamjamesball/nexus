@@ -1,0 +1,16 @@
+Entity Name,Country,Legal Form,Parent Entity,Ownership %,Incorporation Date,Status,Business Activity
+GlobalEnergia Holdings S.A.,Luxembourg,S.A.,,100%,2015-03-12,Active,Investment holding company
+EnergiaTech USA Inc.,United States,Corporation,GlobalEnergia Holdings S.A.,100%,2016-05-20,Active,Regional holding company - Americas
+EnergiaTech Manufacturing LLC,United States,LLC,EnergiaTech USA Inc.,100%,2017-01-15,Active,Solar panel and wind turbine manufacturing
+EnergiaTech Services Corp,United States,Corporation,EnergiaTech USA Inc.,100%,2018-03-08,Active,Installation and maintenance services
+EuropeanEnergia B.V.,Netherlands,B.V.,GlobalEnergia Holdings S.A.,85%,2016-02-18,Active,Regional holding company - Europe
+EnergiaTech Deutschland GmbH,Germany,GmbH,EuropeanEnergia B.V.,100%,2017-06-22,Active,Solar and wind energy development
+EnergiaTech France SAS,France,SAS,EuropeanEnergia B.V.,75%,2017-09-14,Active,Offshore wind development
+Nordic Energy AB,Sweden,AB,EuropeanEnergia B.V.,60%,2018-11-30,Active,Energy storage solutions
+Asia Pacific Energy Pte Ltd,Singapore,Pte Ltd,GlobalEnergia Holdings S.A.,90%,2016-08-25,Active,Regional holding company - Asia Pacific
+EnergiaTech Japan K.K.,Japan,K.K.,Asia Pacific Energy Pte Ltd,100%,2017-12-05,Active,Solar energy systems
+EnergiaTech Australia Pty Ltd,Australia,Pty Ltd,Asia Pacific Energy Pte Ltd,100%,2018-04-16,Active,Wind and solar farm development
+India Solar Energy Pvt Ltd,India,Pvt Ltd,Asia Pacific Energy Pte Ltd,51%,2019-07-20,Active,Utility-scale solar projects
+LATAM Energia Ltda,Brazil,Ltda,GlobalEnergia Holdings S.A.,70%,2017-01-30,Active,Regional holding company - Latin America
+EnergiaTech Mexico S.A.,Mexico,S.A.,LATAM Energia Ltda,100%,2018-02-14,Active,Solar and wind energy development
+Argentina Wind Power S.A.,Argentina,S.A.,LATAM Energia Ltda,80%,2019-05-22,Active,Wind farm development and operations
