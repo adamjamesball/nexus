@@ -48,9 +48,13 @@ export default function RootLayout({
                   <Brain className="h-3 w-3" />
                   <span>Brain</span>
                 </Link>
-                <Link href="http://localhost:3001" className="hover:underline flex items-center space-x-1" target="_blank" rel="noopener noreferrer">
+                <Link href="http://localhost:4100" className="hover:underline flex items-center space-x-1" target="_blank" rel="noopener noreferrer">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                   <span>Docs</span>
+                </Link>
+                <Link href="/dashboard/evals" className="hover:underline flex items-center space-x-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/><path d="m19 12-2 2"/></svg>
+                  <span>Evals</span>
                 </Link>
               </nav>
             </div>

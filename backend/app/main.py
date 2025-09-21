@@ -519,3 +519,29 @@ async def get_company_learning_metrics(company_name: str):
     }
 
     return {"learningMetrics": metrics}
+
+
+@app.get("/v2/evals/company-intelligence")
+async def get_company_intelligence_eval_results():
+    eval_results_path = os.path.join(os.path.dirname(__file__), "..", "evals", "company_intelligence_eval_results.jsonl")
+    if not os.path.exists(eval_results_path):
+        raise HTTPException(status_code=404, detail="Company intelligence evaluation results not found.")
+    
+    results = []
+    with open(eval_results_path, 'r') as f:
+        for line in f:
+            results.append(json.loads(line))
+    return results
+
+
+@app.get("/v2/logs/llm-calls")
+async def get_llm_call_logs():
+    llm_logs_path = os.path.join(os.path.dirname(__file__), "..", "data", "logs", "llm_calls.jsonl")
+    if not os.path.exists(llm_logs_path):
+        raise HTTPException(status_code=404, detail="LLM call logs not found.")
+    
+    logs = []
+    with open(llm_logs_path, 'r') as f:
+        for line in f:
+            logs.append(json.loads(line))
+    return logs
