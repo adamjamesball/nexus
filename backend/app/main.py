@@ -534,6 +534,42 @@ async def get_company_intelligence_eval_results():
     return results
 
 
+@app.post("/v2/evals/company-intelligence/run")
+async def run_company_intelligence_evaluation():
+    # Define the path to the evaluation script
+    script_path = os.path.join(os.path.dirname(__file__), "..", "evals", "run_agent_eval.py")
+    
+    # Define the path to the virtual environment's python interpreter
+    venv_python = os.path.join(os.path.dirname(__file__), "..", "..", ".venv", "bin", "python3")
+
+    # Ensure the script is executable and the venv python exists
+    if not os.path.exists(script_path):
+        raise HTTPException(status_code=404, detail="Evaluation script not found.")
+    if not os.path.exists(venv_python):
+        raise HTTPException(status_code=500, detail="Virtual environment python interpreter not found. Please run 'npm run backend:install'.")
+
+    # Run the evaluation script in a separate process in the background
+    # We need to set PYTHONPATH for the subprocess to find the 'backend.app' modules
+    env = os.environ.copy()
+    env["PYTHONPATH"] = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+    try:
+        process = await asyncio.create_subprocess_exec(
+            venv_python,
+            "-m",
+            "backend.evals.run_agent_eval",
+            env=env,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        # Do not await process.communicate() here, let it run in background
+        # Optionally, log that the process has started
+        print(f"Started evaluation process with PID: {process.pid}")
+        return {"status": "Evaluation started in background", "pid": process.pid}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to start evaluation: {str(e)}")
+
+
 @app.get("/v2/logs/llm-calls")
 async def get_llm_call_logs():
     llm_logs_path = os.path.join(os.path.dirname(__file__), "..", "data", "logs", "llm_calls.jsonl")

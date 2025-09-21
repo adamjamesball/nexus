@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from 'react';
 
 interface EvalResult {
@@ -26,41 +28,64 @@ const EvalsDashboardPage = () => {
   const [llmLogsLoading, setLlmLogsLoading] = useState<boolean>(true);
   const [evalError, setEvalError] = useState<string | null>(null);
   const [llmLogsError, setLlmLogsError] = useState<string | null>(null);
+  const [isEvaluating, setIsEvaluating] = useState<boolean>(false);
+
+  const fetchData = async () => {
+    setEvalLoading(true);
+    setLlmLogsLoading(true);
+    setEvalError(null);
+    setLlmLogsError(null);
+
+    try {
+      const evalResponse = await fetch('http://localhost:8000/v2/evals/company-intelligence');
+      if (!evalResponse.ok) {
+        throw new Error(`HTTP error! status: ${evalResponse.status}`);
+      }
+      const evalData: EvalResult[] = await evalResponse.json();
+      setEvalResults(evalData);
+    } catch (error: any) {
+      setEvalError(error.message);
+    } finally {
+      setEvalLoading(false);
+    }
+
+    try {
+      const llmLogsResponse = await fetch('http://localhost:8000/v2/logs/llm-calls');
+      if (!llmLogsResponse.ok) {
+        throw new Error(`HTTP error! status: ${llmLogsResponse.status}`);
+      }
+      const llmLogsData: LlmLog[] = await llmLogsResponse.json();
+      setLlmLogs(llmLogsData);
+    } catch (error: any) {
+      setLlmLogsError(error.message);
+    } finally {
+      setLlmLogsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchEvalResults = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/v2/evals/company-intelligence');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: EvalResult[] = await response.json();
-        setEvalResults(data);
-      } catch (error: any) {
-        setEvalError(error.message);
-      } finally {
-        setEvalLoading(false);
-      }
-    };
-
-    const fetchLlmLogs = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/v2/logs/llm-calls');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: LlmLog[] = await response.json();
-        setLlmLogs(data);
-      } catch (error: any) {
-        setLlmLogsError(error.message);
-      } finally {
-        setLlmLogsLoading(false);
-      }
-    };
-
-    fetchEvalResults();
-    fetchLlmLogs();
+    fetchData();
   }, []);
+
+  const runEvaluation = async () => {
+    setIsEvaluating(true);
+    try {
+      const response = await fetch('http://localhost:8000/v2/evals/company-intelligence/run', {
+        method: 'POST',
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`HTTP error! status: ${response.status} - ${errorData.detail || response.statusText}`);
+      }
+      alert("Evaluation started successfully in the background!");
+      // Give some time for the background process to start and potentially write results
+      setTimeout(fetchData, 2000); 
+    } catch (error: any) {
+      alert(`Failed to start evaluation: ${error.message}`);
+    } finally {
+      setIsEvaluating(false);
+    }
+  };
 
   const totalEvals = evalResults.length;
   const correctEvals = evalResults.filter(res => res.match).length;
@@ -71,7 +96,16 @@ const EvalsDashboardPage = () => {
       <h1 className="text-3xl font-bold mb-6">Evals Dashboard</h1>
 
       <div className="bg-card p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Company Intelligence Evaluation Summary</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Company Intelligence Evaluation Summary</h2>
+          <button
+            onClick={runEvaluation}
+            disabled={isEvaluating}
+            className={`px-4 py-2 rounded-md text-white ${isEvaluating ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
+          >
+            {isEvaluating ? 'Running Evaluation...' : 'Run Evaluation'}
+          </button>
+        </div>
         {evalLoading && <p>Loading evaluation results...</p>}
         {evalError && <p className="text-red-500">Error loading evaluation results: {evalError}</p>}
         {!evalLoading && !evalError && (
@@ -119,7 +153,7 @@ const EvalsDashboardPage = () => {
             </table>
           </div>
         )}
-        {!evalLoading && !evalError && evalResults.length === 0 && <p>No evaluation results found. Run `npm run eval:company-intel` to generate some.</p>}
+        {!evalLoading && !evalError && evalResults.length === 0 && <p>No evaluation results found. Click 'Run Evaluation' to generate some.</p>}
       </div>
 
       <div className="bg-card p-6 rounded-lg shadow-md">
