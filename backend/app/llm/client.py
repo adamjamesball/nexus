@@ -5,6 +5,8 @@ import asyncio
 import hashlib
 import json
 import logging
+import json
+import os
 from typing import Dict, List, Optional, Any, AsyncGenerator
 from datetime import datetime, timedelta
 # import redis.asyncio as redis  # Disabled for simplified testing
@@ -17,6 +19,18 @@ from ..config import get_settings
 
 
 logger = logging.getLogger(__name__)
+
+# Setup a dedicated logger for LLM calls
+LLM_CALL_LOGGER = logging.getLogger("llm_calls")
+LLM_CALL_LOGGER.setLevel(logging.INFO)
+
+# Ensure the log directory exists
+log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "logs")
+os.makedirs(log_dir, exist_ok=True)
+
+llm_call_handler = logging.FileHandler(os.path.join(log_dir, "llm_calls.jsonl"))
+llm_call_handler.setFormatter(logging.Formatter("%(message)s"))
+LLM_CALL_LOGGER.addHandler(llm_call_handler)
 
 
 class RateLimitError(Exception):
@@ -230,6 +244,17 @@ class LLMClient:
             # Cache the response
             if use_cache and cache_key:
                 await self._set_cache(cache_key, response, cache_ttl)
+
+            # Log the LLM call
+            LLM_CALL_LOGGER.info(json.dumps({
+                "timestamp": datetime.utcnow().isoformat(),
+                "provider": provider,
+                "model": model,
+                "input_messages": [msg.model_dump() for msg in messages],
+                "output_content": response.content,
+                "usage": response.usage.model_dump() if response.usage else None,
+                "finish_reason": response.finish_reason,
+            }))
 
             return response
 

@@ -8,9 +8,10 @@
     "frontend:dev": "npm --prefix frontend run dev",
     "docs:dev": "npm --prefix docs run dev",
     "frontend:dev:3003": "npm --prefix frontend run dev:3003",
-    "dev": "concurrently -k -n backend,frontend,docs -c blue,green,yellow "npm:backend:dev" "npm:frontend:dev" "npm:docs:dev"",,
+    "dev": "concurrently -k -n backend,frontend,docs -c blue,green,yellow \"npm:backend:dev\" \"npm:frontend:dev\" \"npm:docs:dev\"",
     "build": "npm --prefix frontend run build",
     "start": "npm --prefix frontend run start",
+    "eval:company-intel": "PYTHONPATH=./backend python3 backend/evals/run_agent_eval.py",
     "smoke": "bash scripts/smoke.sh"
   },
   "devDependencies": {
