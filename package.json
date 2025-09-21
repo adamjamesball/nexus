@@ -11,7 +11,7 @@
     "dev": "concurrently -k -n backend,frontend,docs -c blue,green,yellow \"npm:backend:dev\" \"npm:frontend:dev\" \"npm:docs:dev\"",
     "build": "npm --prefix frontend run build",
     "start": "npm --prefix frontend run start",
-    "eval:company-intel": "PYTHONPATH=./backend python3 backend/evals/run_agent_eval.py",
+    "eval:company-intel": "PYTHONPATH=. ./.venv/bin/python3 -m backend.evals.run_agent_eval",
     "smoke": "bash scripts/smoke.sh"
   },
   "devDependencies": {
