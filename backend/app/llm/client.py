@@ -192,6 +192,7 @@ class LLMClient:
         temperature: float = 0.7,
         use_cache: bool = True,
         cache_ttl: int = 3600,
+        context: Optional[Dict[str, Any]] = None,
         **kwargs
     ) -> LLMResponse:
         """
@@ -254,6 +255,7 @@ class LLMClient:
                 "output_content": response.content,
                 "usage": response.usage.model_dump() if response.usage else None,
                 "finish_reason": response.finish_reason,
+                "context": context, # Add context to the log
             }))
 
             return response
@@ -269,6 +271,7 @@ class LLMClient:
         model: Optional[str] = None,
         max_tokens: int = 1000,
         temperature: float = 0.7,
+        context: Optional[Dict[str, Any]] = None,
         **kwargs
     ) -> AsyncGenerator[str, None]:
         """

@@ -433,7 +433,8 @@ class RealCompanyIntelligenceAgent:
             response = await client.generate(
                 messages=messages,
                 max_tokens=400,
-                temperature=0.3
+                temperature=0.3,
+                context={"agent": "RealCompanyIntelligenceAgent", "method": "_add_company_context"}
             )
 
             import json
