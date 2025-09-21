@@ -1,0 +1,32 @@
+# Technical Requirements
+
+## System Architecture
+
+The system is designed as a modular, multi-agent architecture. The core components are:
+
+- **Frontend:** A Next.js web application that provides the user interface for interacting with the system.
+- **Backend:** A Python-based application that orchestrates the autonomous agents and manages the data.
+- **Agents:** A collection of specialized AI agents, each responsible for a specific task (e.g., data collection, calculation, report generation).
+- **LLM Gateway:** A centralized gateway for interacting with large language models (LLMs) from different providers.
+
+## Tech Stack
+
+- **Frontend:** Next.js, React, TypeScript, Tailwind CSS
+- **Backend:** Python, FastAPI, LangChain
+- **Databases:** TBD (likely a combination of vector and relational databases)
+- **LLMs:** OpenAI GPT-4, Anthropic Claude
+
+## Key Features
+
+The MVP will include the following key features:
+
+- **User authentication:** Users can sign up and log in to the application.
+- **Onboarding:** A guided onboarding process to help users set up their organization and connect their data sources.
+- **Agent orchestration:** The ability to launch and monitor the autonomous agents.
+- **Report generation:** The ability to generate a basic sustainability report in PDF format.
+
+## Non-Functional Requirements
+
+- **Scalability:** The system must be able to handle a large number of users and organizations.
+- **Security:** The system must be secure and protect the confidentiality of user data.
+- **Reliability:** The system must be reliable and available 24/7.
