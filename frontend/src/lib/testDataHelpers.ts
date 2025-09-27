@@ -134,7 +134,7 @@ export const testScenarios = {
 };
 
 // Helper function to generate random test data variations
-export function generateTestVariation(baseData: any, variationPercent: number = 10) {
+export function generateTestVariation(baseData: any, variationPercent: number = 10): any {
   if (typeof baseData === 'number') {
     const variation = baseData * (variationPercent / 100);
     return baseData + (Math.random() - 0.5) * 2 * variation;

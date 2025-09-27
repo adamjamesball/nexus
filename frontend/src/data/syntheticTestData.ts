@@ -15,6 +15,8 @@ export interface SyntheticOrganization {
   name: string;
   type: 'parent' | 'subsidiary' | 'joint_venture' | 'supplier';
   jurisdiction: string;
+  parentId?: string;
+  parentName?: string;
   ownershipPercentage?: number;
   employees: number;
   revenue: number; // in millions USD

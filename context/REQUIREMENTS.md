@@ -9,6 +9,8 @@ This document captures the key requirements to realize the vision and strategy. 
   - Emissions Calculation Agent: calculate emissions per scope/category with methodology transparency
   - QA/Controls Agent: run validations, variance checks, and audit trails
   - Reporting Agent: assemble reporting package (Excel/CSV, narrative, visuals) aligned to standards (e.g., CSRD/ESRS)
+- Company Intelligence Agent: ✅ onboarding endpoints expose profile discovery, document scouting, and magic-moment insights
+- Agent configuration explorer: ✅ dashboard surfaces utility agents, orchestration flows, prompts, and tool contracts
 - Super Agents
   - Carbon Accounting Super Agent orchestrates utility agents using defined schemas and checkpoints
   - Nexus Orchestrator coordinates across sustainability domains and manages cross-agent memory/policies

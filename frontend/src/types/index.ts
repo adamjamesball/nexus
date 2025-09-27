@@ -49,12 +49,102 @@ export interface OrganizationEntity {
   id: string;
   name: string;
   type: string;
-  parentId?: string;
+  facilityType?: string;
+  parentId?: string | null;
+  parentName?: string | null;
   ownershipPercentage?: number;
-  jurisdiction?: string;
+  jurisdiction?: string | null;
+  region?: string | null;
+  country?: string | null;
+  countryCode?: string | null;
+  businessUnit?: string | null;
+  division?: string | null;
   confidenceScore: number;
   isUserVerified: boolean;
-  metadata: Record<string, any>;
+  metadata: {
+    sourceFile?: string;
+    sourceSheet?: string;
+    sourceRow?: number;
+    entityIdentifier?: string;
+    displayName?: string;
+    [key: string]: any;
+  };
+}
+
+export interface OrgBoundaryIssue {
+  code: string;
+  message: string;
+  severity?: 'info' | 'warning' | 'error' | string;
+  entity?: string;
+  field?: string;
+  sourceFile?: string;
+  sourceSheet?: string;
+  sourceRow?: number;
+  recommendation?: string;
+  details?: string[];
+}
+
+export interface OrgBoundaryEdge {
+  entityId: string;
+  parentId?: string | null;
+  parentName?: string | null;
+  relationship?: string;
+}
+
+export interface OrgBoundarySummary {
+  numEntities?: number;
+  numIssues?: number;
+  numHierarchyLinks?: number;
+  regions?: string[];
+  countries?: string[];
+  [key: string]: unknown;
+}
+
+export interface OrgBoundaryResults {
+  summary: OrgBoundarySummary;
+  narrative?: string;
+  recommendations?: string[];
+  issues: OrgBoundaryIssue[];
+  hierarchy: OrgBoundaryEdge[];
+  exports?: string[];
+}
+
+export interface CarbonSummary {
+  summary: string;
+  ghg_protocol_alignment?: boolean;
+  entities_analyzed?: number;
+  entitiesAnalyzed?: number;
+  geographies?: string[];
+  recommendations?: string[];
+  [key: string]: unknown;
+}
+
+export interface PCFSummary {
+  summary: string;
+  standards?: string[];
+  next_steps?: string[];
+  nextSteps?: string[];
+  recommendations?: string[];
+  [key: string]: unknown;
+}
+
+export interface NatureSummary {
+  summary: string;
+  frameworks?: string[];
+  sites_considered?: number;
+  sitesConsidered?: number;
+  recommendations?: string[];
+  [key: string]: unknown;
+}
+
+export interface ReportExecutiveSummary {
+  overview: string;
+  highlights: string[];
+}
+
+export interface ReportContent {
+  executiveSummary: ReportExecutiveSummary;
+  sections: Record<string, any>;
 }
 
 export interface DomainResult {
@@ -101,25 +191,33 @@ export interface CrossDomainInsight {
 }
 
 export interface ProcessingResults {
-  id: string;
-  sessionId: string;
+  id?: string;
+  sessionId?: string;
   entities: OrganizationEntity[];
-  overallScore: number;
-  maturityLevel: 'beginner' | 'developing' | 'advanced' | 'leader';
-  domainResults: Record<SustainabilityDomain, DomainResult>;
-  crossDomainInsights: CrossDomainInsight[];
-  executiveSummary: string;
-  keyInsights: string[];
-  recommendations: Recommendation[];
-  processingTime: number;
-  confidenceScore: number;
+  overallScore?: number;
+  maturityLevel?: 'beginner' | 'developing' | 'advanced' | 'leader';
+  domainResults?: Record<SustainabilityDomain, DomainResult>;
+  crossDomainInsights?: CrossDomainInsight[];
+  executiveSummary?: string;
+  keyInsights?: string[];
+  recommendations?: Recommendation[];
+  processingTime?: number;
+  processingTimeMs?: number;
+  confidenceScore?: number;
   reportUrl?: string;
-  sustainabilityProfile: {
+  sustainabilityProfile?: {
     strengths: string[];
     weaknesses: string[];
     opportunities: string[];
     threats: string[];
   };
+  orgBoundary?: OrgBoundaryResults;
+  carbon?: CarbonSummary;
+  pcf?: PCFSummary;
+  nature?: NatureSummary;
+  report?: ReportContent;
+  exports?: string[];
+  [key: string]: unknown;
 }
 
 export interface ProcessingSession {
@@ -127,17 +225,31 @@ export interface ProcessingSession {
   status: 'uploading' | 'processing' | 'completed' | 'error';
   files: UploadedFile[];
   agents: AgentStatus[];
+  backendSessionId?: string;
   results?: ProcessingResults;
   startTime: string;
   endTime?: string;
   totalProcessingTime?: number;
   errorMessage?: string;
+  failureLogs?: FailureRecord[];
+}
+
+export interface FailureRecord {
+  timestamp: string;
+  sessionId?: string | null;
+  step?: string | null;
+  filePath?: string | null;
+  errorCode: string;
+  message: string;
+  hint?: string | null;
+  details?: Record<string, unknown> | null;
 }
 
 export interface WebSocketMessage {
-  type: 'agent_update' | 'file_update' | 'session_update' | 'error';
-  data: any;
-  timestamp: string;
+  type: 'agent_update' | 'file_update' | 'session_update' | 'agent_log' | 'error';
+  data?: any;
+  payload?: unknown;
+  timestamp?: string;
 }
 
 // Supported file types for upload

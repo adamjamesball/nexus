@@ -95,24 +95,38 @@ const createInitialAgents = (): AgentStatus[] => [
   }
 ];
 
-const generateMockEntities = (): OrganizationEntity[] => 
-  syntheticOrganizations.map(org => ({
-    id: generateId(),
-    name: org.name,
-    type: org.type === 'parent' ? 'Parent Company' : 
-          org.type === 'subsidiary' ? 'Subsidiary' :
-          org.type === 'joint_venture' ? 'Joint Venture' : 'Business Unit',
-    jurisdiction: org.jurisdiction,
-    ownershipPercentage: org.ownershipPercentage || 100,
-    confidenceScore: 85 + Math.random() * 15, // 85-100%
-    isUserVerified: false,
-    metadata: {
-      sector: org.sites[0]?.type || 'General',
-      employees: org.employees,
-      revenue: org.revenue,
-      sites: org.sites.length
-    }
-  }));
+const generateMockEntities = (): OrganizationEntity[] =>
+  syntheticOrganizations.map((org, idx) => {
+    const primarySite = org.sites[0];
+    const facilityType = primarySite?.type || 'Facility';
+    const region = primarySite?.location.region || (idx % 2 === 0 ? 'AMER' : 'EMEA');
+    const country = primarySite?.location.country || org.jurisdiction;
+    return {
+      id: generateId(),
+      name: org.name,
+      type: org.type === 'parent' ? 'Parent Company' :
+        org.type === 'subsidiary' ? 'Subsidiary' :
+        org.type === 'joint_venture' ? 'Joint Venture' : 'Business Unit',
+      facilityType,
+      parentId: org.parentId || null,
+      parentName: org.parentName || null,
+      jurisdiction: org.jurisdiction,
+      region,
+      country,
+      countryCode: country ? country.slice(0, 2).toUpperCase() : 'US',
+      ownershipPercentage: org.ownershipPercentage || 100,
+      confidenceScore: 85 + Math.random() * 15,
+      isUserVerified: false,
+      metadata: {
+        sourceFile: 'mock_upload.xlsx',
+        sourceRow: idx + 2,
+        sector: primarySite?.type || 'General',
+        employees: org.employees,
+        revenue: org.revenue,
+        sites: org.sites.length,
+      },
+    } as OrganizationEntity;
+  });
 
 export const handlers = [
   // Create new session
@@ -219,34 +233,108 @@ export const handlers = [
     // Simulate processing completion after a delay
     setTimeout(() => {
       const entities = generateMockEntities();
+      const averageConfidence = entities.reduce((acc, e) => acc + e.confidenceScore, 0) / Math.max(entities.length, 1);
+      const issues = [
+        {
+          code: 'missing_parent',
+          message: 'Parent reference missing for 2 subsidiaries',
+          severity: 'warning',
+          sourceFile: 'mock_upload.xlsx',
+          sourceRow: 6,
+          recommendation: 'Ensure holding companies are included or mark subsidiaries as standalone.',
+        },
+        {
+          code: 'country_standardization',
+          message: 'Several facilities use verbose country labels.',
+          severity: 'info',
+          recommendation: 'Provide ISO-2 country codes alongside descriptive labels.',
+        },
+      ];
+
+      const regions = Array.from(new Set(entities.map(e => e.region).filter(Boolean))) as string[];
+      const countries = Array.from(new Set(entities.map(e => e.countryCode).filter(Boolean))) as string[];
+
       const results: ProcessingResults = {
         id: generateId(),
         sessionId: sessionId,
-        entities: entities,
-        overallScore: mockOverallInsights.overallScore,
-        maturityLevel: mockOverallInsights.maturityLevel,
-        domainResults: mockOverallInsights.domainScores as any,
-        crossDomainInsights: [],
-        executiveSummary: mockOverallInsights.executiveSummary,
-        keyInsights: mockOverallInsights.keyAchievements,
-        recommendations: mockOverallInsights.priorityActions.map(action => ({
-          id: generateId(),
-          title: action,
-          description: action,
-          priority: 'high' as const,
-          effort: 'medium' as const,
-          impact: 'high' as const,
-          timeline: '6-12 months',
-          domains: ['cross_domain']
-        })),
-        processingTime: Math.floor(Math.random() * 60000) + 30000,
-        confidenceScore: 90 + Math.random() * 8,
-        sustainabilityProfile: {
-          strengths: ['Strong sustainability leadership', 'Above-average performance'],
-          weaknesses: ['Scope 3 emissions visibility', 'Circular economy transition'],
-          opportunities: ['Renewable energy', 'Nature-based solutions', 'Supplier engagement'],
-          threats: ['Regulatory changes', 'Climate risks', 'Supply chain disruption'],
+        entities,
+        orgBoundary: {
+          summary: {
+            numEntities: entities.length,
+            numIssues: issues.length,
+            numHierarchyLinks: entities.length,
+            regions,
+            countries,
+          },
+          narrative: `Consolidated ${entities.length} entities across ${countries.length} countries and ${regions.length} regions.`,
+          recommendations: [
+            'Provide ownership percentages for all subsidiaries.',
+            'Confirm reporting boundaries for joint venture entities.',
+            'Introduce country picklists to avoid inconsistent labels.'
+          ],
+          issues,
+          hierarchy: entities.map(e => ({
+            entityId: e.id,
+            parentId: e.parentId || null,
+            parentName: e.parentName || null,
+            relationship: e.parentId ? 'reports_to' : 'root',
+          })),
+          exports: [
+            'consolidated_entities.xlsx',
+            'org_boundary.xlsx',
+            'org_hierarchy.xlsx',
+            'data_quality_issues.xlsx',
+            'summary.txt',
+          ],
         },
+        carbon: {
+          summary: 'Baseline carbon assessment completed for consolidated entities.',
+          ghg_protocol_alignment: true,
+          entities_analyzed: entities.length,
+          geographies: countries,
+          recommendations: [
+            'Collect activity data for Scope 1 stationary combustion.',
+            'Gather purchased electricity data for Scope 2 by site.',
+            'Map supplier categories for Scope 3 screening.'
+          ],
+        },
+        pcf: {
+          summary: 'Product carbon footprint readiness assessment available.',
+          standards: ['ISO 14067', 'GHG Protocol Product Standard'],
+          next_steps: [
+            'Define product system boundaries and functional units.',
+            'Collect primary supplier data for key materials.',
+            'Identify EPD databases for secondary data.'
+          ],
+        },
+        nature: {
+          summary: 'Nature risk baseline prepared with TNFD framing.',
+          frameworks: ['TNFD', 'BNG'],
+          sites_considered: entities.length,
+          recommendations: [
+            'Screen locations against protected areas and KBAs.',
+            'Assess water dependency for high-impact facilities.',
+            'Plan biodiversity net gain metrics where required.'
+          ],
+        },
+        report: {
+          executiveSummary: {
+            overview: `Analyzed ${entities.length} entities across ${countries.length} countries.`,
+            highlights: [
+              'Org boundary exported with consolidated hierarchy.',
+              'Carbon, PCF, and nature assessments seeded for next phase.',
+              'Data quality issues flagged for remediation.'
+            ],
+          },
+          sections: {},
+        },
+        confidenceScore: Math.round(averageConfidence),
+        processingTimeMs: Math.floor(Math.random() * 60000) + 30000,
+        keyInsights: [
+          'Strong coverage of AMER/EMEA regions with 95% entity confidence.',
+          'Duplicate identifiers detected; resolve before carbon inventory.',
+          'Country labels need standardisation to unlock analytics.'
+        ],
       };
       
       session.status = 'completed';
